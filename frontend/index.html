@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green AI – Intelligent Environmental Risk Engine</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Landing / Hero -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Green AI</h1>
+            <p class="hero-subtitle">Intelligent Environmental & Construction Risk Analysis</p>
+            <p class="hero-desc">AI-powered analysis of drone imagery, site videos, PDFs, and compliance reports to detect environmental risks and carbon impact.</p>
+            <div class="hero-actions">
+                <button type="button" class="btn btn-primary" id="btnAnalyze">Analyze Project</button>
+                <button type="button" class="btn btn-secondary" id="btnDemo">Try Demo</button>
+                <label class="btn btn-upload" for="heroPptInput">Upload PPT</label>
+                <input type="file" id="heroPptInput" accept=".pptx" class="hidden-input">
+                <label class="btn btn-upload" for="heroPdfInput">Upload PDF</label>
+                <input type="file" id="heroPdfInput" accept=".pdf" class="hidden-input">
+                <label class="btn btn-upload" for="heroImageInput">Upload Image</label>
+                <input type="file" id="heroImageInput" accept=".png,.jpg,.jpeg,.gif,.webp,.bmp,.tiff,.tif" class="hidden-input">
+            </div>
+        </div>
+        <div class="hero-glow"></div>
+    </section>
+
+    <!-- App layout (hidden until "Analyze" or "Try Demo") -->
+    <div id="app" class="app hidden">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo-text">Green AI</span>
+            </div>
+            <nav class="sidebar-nav">
+                <button type="button" class="nav-item active" data-view="chat">
+                    <span class="nav-icon">◆</span>
+                    New Analysis
+                </button>
+                <button type="button" class="nav-item" data-view="reports">
+                    <span class="nav-icon">▣</span>
+                    Previous Reports
+                </button>
+                <button type="button" class="nav-item" data-view="projects">
+                    <span class="nav-icon">◉</span>
+                    Saved Projects
+                </button>
+                <button type="button" class="nav-item" data-view="settings">
+                    <span class="nav-icon">⚙</span>
+                    Settings
+                </button>
+            </nav>
+            <nav class="history-section">
+                <div class="history-header">Conversations</div>
+                <div id="historyList" class="history-list"></div>
+            </nav>
+            <div class="sidebar-footer">
+                <button type="button" class="nav-item" id="btnNewChat">+ New chat</button>
+            </div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <h2 class="topbar-title">Green AI Assistant</h2>
+                <div class="topbar-right">
+                    <p class="topbar-status">AI-powered Environmental Intelligence</p>
+                    <button type="button" class="auth-btn" id="btnAuth">Login</button>
+                    <button type="button" class="auth-btn hidden" id="btnLogout">Logout</button>
+                    <span class="auth-user hidden" id="authUser"></span>
+                </div>
+            </header>
+            <section id="settingsPanel" class="settings-panel hidden">
+                <h3 class="settings-title">Appearance</h3>
+                <p class="settings-subtitle">Choose how Green AI looks. Theme is saved for your next visit.</p>
+                <div class="theme-options">
+                    <button type="button" class="theme-option" data-theme="dark">Dark</button>
+                    <button type="button" class="theme-option" data-theme="light">Light</button>
+                    <button type="button" class="theme-option" data-theme="colorful">Colorful</button>
+                    <button type="button" class="theme-option" data-theme="transparent">Transparent</button>
+                </div>
+            </section>
+            <div class="chat-area" id="chatArea">
+                <div class="chat-welcome" id="chatWelcome">
+                    <p>Ask about project risk, carbon impact, compliance check…</p>
+                    <div class="suggestions" id="suggestions">
+                        <button type="button" class="suggestion-btn">Check environmental risk</button>
+                        <button type="button" class="suggestion-btn">Analyze tree removal compliance</button>
+                        <button type="button" class="suggestion-btn">Generate sustainability report</button>
+                        <button type="button" class="suggestion-btn">Calculate carbon footprint</button>
+                        <button type="button" class="suggestion-btn">Is this project high or low risk?</button>
+                    </div>
+                </div>
+                <div id="messages"></div>
+                <div class="typing-indicator hidden" id="typingIndicator">
+                    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+            </div>
+            <div class="input-area">
+                <div class="upload-row">
+                    <label class="upload-ppt-btn" for="chatPptInput">📎 PPT</label>
+                    <input type="file" id="chatPptInput" accept=".pptx" class="hidden-input">
+                    <label class="upload-ppt-btn" for="chatPdfInput">📄 PDF</label>
+                    <input type="file" id="chatPdfInput" accept=".pdf" class="hidden-input">
+                    <label class="upload-ppt-btn" for="chatImageInput">🖼 Image</label>
+                    <input type="file" id="chatImageInput" accept=".png,.jpg,.jpeg,.gif,.webp,.bmp,.tiff,.tif" class="hidden-input">
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="userInput" placeholder="Ask about project risk, carbon impact, compliance check..." maxlength="2000" autocomplete="off">
+                    <button type="button" class="send-btn" id="sendBtn" title="Send">
+                        <span class="send-icon">➤</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="authModal" class="auth-modal hidden">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" data-view="login">Login</button>
+                <button type="button" class="auth-tab" data-view="register">Register</button>
+            </div>
+            <div class="auth-body">
+                <div class="auth-view" id="authLogin">
+                    <input type="email" id="loginEmail" placeholder="Email">
+                    <input type="password" id="loginPassword" placeholder="Password">
+                    <button type="button" id="doLogin">Login</button>
+                </div>
+                <div class="auth-view hidden" id="authRegister">
+                    <input type="text" id="regName" placeholder="Name">
+                    <input type="email" id="regEmail" placeholder="Email">
+                    <input type="password" id="regPassword" placeholder="Password">
+                    <button type="button" id="doRegister">Create account</button>
+                </div>
+                <div class="auth-error" id="authError"></div>
+            </div>
+            <button type="button" class="auth-close" id="authClose">×</button>
+        </div>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loader"></div>
+        <div class="loading-text" id="loadingText">Loading…</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
