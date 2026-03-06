@@ -60,8 +60,10 @@ Production-grade **RAG** (Retrieval-Augmented Generation) system with a ChatGPT-
 
 The design supports adding:
 
-- **Drone images** → CLIP embeddings, store in vector DB with `parent_id`
-- **Audio** → Whisper → text → existing chunking pipeline
+
 - **PDFs** → Extract text → semantic chunking → ingest
+- Text → Clean/normalize text → semantic chunking → ingest
+- PPTs → Extract slide text (titles, bullets, notes) → semantic chunking → ingest
 
 Add parsers in `ingest.py` and optional embedding branches in `embeddings.py` / `vector_store.py` as needed.
+
